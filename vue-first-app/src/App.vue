@@ -10,9 +10,10 @@
         :id="friend.id"
         :key="friend.id"
         :name="friend.name"
-        :phone-number="friend.phone" 
-        :email-address="friend.email"
+        :phone-number="friend.phone"
+        :email-address="friend.email" 
         :is-favorite="friend.isFavorite"
+        @delete="deleteContent"
         @toggle-favorite="toggleFavoriteStatus" />
     </ul>
   </section>
@@ -61,6 +62,9 @@ export default {
         isFavorite: false
       }
       this.friends.push(NewFriendContent)
+    },
+    deleteContent(friendId) {
+      this.friends = this.friends.filter(friend => friend.id !== friendId)
     }
   }
 }
