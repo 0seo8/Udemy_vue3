@@ -1,21 +1,40 @@
-<script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + Vite" />
+  <div>
+    <TheHeader />
+    <badge-list />
+    <UserInfo
+      :full-name="activeUser.name"
+      :info-text="activeUser.description"
+      :role="activeUser.role" />
+  </div>
 </template>
 
+<script>
+import TheHeader from '~/components/TheHeader.vue'
+import UserInfo from '~/components/UserInfo.vue'
+export default {
+  components: {
+    TheHeader,
+    UserInfo
+  },
+  data() {
+    return {
+      activeUser: {
+        name: 'Maximilian Schwarzmüller',
+        description: 'Site owner and admin',
+        role: 'admin',
+      },
+    }
+  },
+}
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+html {
+  font-family: sans-serif;
+}
+
+body {
+  margin: 0;
 }
 </style>
