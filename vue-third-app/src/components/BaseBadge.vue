@@ -25,6 +25,7 @@ export default {
   border-radius: 30px;
   background-color: #ccc;
   color: #2e2e2e;
+  font-weight: normal;
 }
 
 .badge--admin {

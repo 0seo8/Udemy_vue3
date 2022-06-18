@@ -1,157 +1,46 @@
 <template>
-  <section>
-    <header>
-      <h1>My Friends</h1>
-    </header>
-    <NewFriend @add-contact="addContact" />
-    <ul>
-      <FriendContact
-        v-for="friend in friends"
-        :id="friend.id"
-        :key="friend.id"
-        :name="friend.name"
-        :phone-number="friend.phone"
-        :email-address="friend.email" 
-        :is-favorite="friend.isFavorite"
-        @delete="deleteContent"
-        @toggle-favorite="toggleFavoriteStatus" />
-    </ul>
-  </section>
-  <!-- input요소처럼 사용해볼 예정 -->
+  <learning-survey @survey-submit="storeSurvey"></learning-survey>
+  <user-experiences :results="savedSurveyResults"></user-experiences>
 </template>
 
 <script>
-import FriendContact from '~/components/FriendContact.vue'
-import NewFriend from '~/components/NewFriend.vue'
+import LearningSurvey from './components/survey/LearningSurvey.vue';
+import UserExperiences from './components/survey/UserExperiences.vue';
+
 export default {
   components: {
-    NewFriend,
-    FriendContact,
+    LearningSurvey,
+    UserExperiences,
   },
   data() {
     return {
-      friends: [
-        {
-          id: 'manuel',
-          name: 'Manuel Lorenz',
-          phone: '010 1234 5678',
-          email: 'manuel@naver.com',
-          isFavorite: true,
-        },
-        {
-          id: 'julie',
-          name: 'Julie Jones',
-          phone: '010 9876 5678',
-          email: 'juli@naver.com',
-          isFavorite: false,
-        },
-      ]
-    }
+      savedSurveyResults: [],
+    };
   },
   methods: {
-    toggleFavoriteStatus(friendId) {
-      const identifiedFriend =  this.friends.find(friend => friend.id === friendId)
-      identifiedFriend.isFavorite = !identifiedFriend.isFavorite
-    },
-    addContact(name, phone, email) {
-      const NewFriendContent = {
+    storeSurvey(surveyData) {
+      const surveyResult = {
+        name: surveyData.userName,
+        rating: surveyData.rating,
         id: new Date().toISOString(),
-        name,
-        phone,
-        email,
-        isFavorite: false
-      }
-      this.friends.push(NewFriendContent)
+      };
+      this.savedSurveyResults.push(surveyResult);
+      console.log(surveyResult);
     },
-    deleteContent(friendId) {
-      this.friends = this.friends.filter(friend => friend.id !== friendId)
-    }
-  }
-}
+  },
+};
 </script>
 
-<style lang="css">
-@import url('https://fonts.googleapis.com/css2?family=Jost&display=swap');
-
-  * {
+<style>
+* {
   box-sizing: border-box;
 }
 
 html {
-  font-family: 'Jost', sans-serif;
+  font-family: sans-serif;
 }
 
 body {
   margin: 0;
 }
-
-header {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  margin: 3rem auto;
-  border-radius: 10px;
-  padding: 1rem;
-  background-color: #58004d;
-  color: white;
-  text-align: center;
-  width: 90%;
-  max-width: 40rem;
-}
-
-#app ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-#app li,
-#app form {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  margin: 1rem auto;
-  border-radius: 10px;
-  padding: 1rem;
-  text-align: center;
-  width: 90%;
-  max-width: 40rem;
-}
-
-#app h2 {
-  font-size: 2rem;
-  border-bottom: 4px solid #ccc;
-  color: #58004d;
-  margin: 0 0 1rem 0;
-}
-
-#app button {
-  font: inherit;
-  cursor: pointer;
-  border: 1px solid #ff0077;
-  background-color: #ff0077;
-  color: white;
-  padding: 0.05rem 1rem;
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.26);
-}
-
-#app button:hover,
-#app button:active {
-  background-color: #ec3169;
-  border-color: #ec3169;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.26);
-}
-
-#app input {
-  font: inherit;
-  padding: .15rem;
-}
-
-#app label {
-  font-weight: bold;
-  margin-right: 1rem;
-  width: 7rem;
-  display: inline-block
-}
-
-#app form div {
-  margin : 1rem 0;
-}
-
 </style>
